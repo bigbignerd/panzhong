@@ -37,7 +37,8 @@ class StaffController extends CommonController
     {
         $searchModel = new PzStaffSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $searchModel = $this->initDropdownData($searchModel);
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -64,6 +65,7 @@ class StaffController extends CommonController
     public function actionCreate()
     {
         $model = new PzStaff();
+        $model = $this->initDropdownData($model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -116,9 +118,18 @@ class StaffController extends CommonController
     protected function findModel($id)
     {
         if (($model = PzStaff::findOne($id)) !== null) {
+            $model = $this->initDropdownData($model);
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    protected function initDropdownData($model)
+    {
+        $model = $this->initListMap($model);
+        $model = $this->initDeptListMap($model);
+        $model = $this->initPosListMap($model);
+
+        return $model;
     }
 }

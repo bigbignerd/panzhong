@@ -8,3 +8,4 @@ Yii::setAlias('public', dirname(dirname(__DIR__)).'/public');
 Yii::setAlias('jsPath','http://'.$_SERVER['SERVER_NAME'].'/public/js');
 Yii::setAlias('cssPath','http://'.$_SERVER['SERVER_NAME'].'/public/css');
 Yii::setAlias('imgPath','http://'.$_SERVER['SERVER_NAME'].'/public/images');
+Yii::setAlias('plugin','http://'.$_SERVER['SERVER_NAME'].'/public/plugins');

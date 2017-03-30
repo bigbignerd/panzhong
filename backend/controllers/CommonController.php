@@ -17,5 +17,17 @@ class CommonController extends \yii\web\Controller
         $model->companyMap = $companyModel->listIdNameMap($companyModel->listArray());
         return $model;
     }
+    protected function initDeptListMap($model)
+    {
+    	$departModel = new \backend\models\PzDepartment();
+    	$model->deptMap = $departModel->listIdNameMap($departModel->listArray());
+    	return $model;
+    }
+    protected function initPosListMap($model)
+    {
+    	$departModel = new \backend\models\PzPosition();
+    	$model->posMap = $departModel->listIdNameMap($departModel->listArray());
+    	return $model;
+    }
 }
 ?>

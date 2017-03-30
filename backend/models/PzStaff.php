@@ -39,7 +39,7 @@ class PzStaff extends \backend\models\PzBase
     {
         return [
             [['companyId', 'deptId', 'positionId', 'qq', 'joinTime', 'leaveTime', 'status'], 'integer'],
-            [['name', 'joinTime'], 'required'],
+            [['name', 'joinTime','companyId', 'deptId', 'positionId'], 'required'],
             [['leaveDesc'], 'string'],
             [['name', 'address'], 'string', 'max' => 300],
             [['phone', 'telephone'], 'string', 'max' => 20],
@@ -54,19 +54,27 @@ class PzStaff extends \backend\models\PzBase
     {
         return [
             'id' => 'ID',
-            'companyId' => 'Company ID',
-            'deptId' => 'Dept ID',
-            'positionId' => 'Position ID',
-            'name' => 'Name',
-            'phone' => 'Phone',
-            'telephone' => 'Telephone',
+            'companyId' => '所属子公司',
+            'deptId' => '部门',
+            'positionId' => '职位',
+            'name' => '姓名',
+            'phone' => '手机',
+            'telephone' => '座机',
             'email' => 'Email',
-            'qq' => 'Qq',
-            'address' => 'Address',
-            'joinTime' => 'Join Time',
-            'leaveTime' => 'Leave Time',
-            'leaveDesc' => 'Leave Desc',
-            'status' => 'Status',
+            'qq' => 'QQ',
+            'address' => '联系地址',
+            'joinTime' => '入职时间',
+            'leaveTime' => '离职时间',
+            'leaveDesc' => '离职描述',
+            'status' => '状态',
         ];
     }
-}
+    public function beforeSave($insert)
+    {
+        if(parent::beforeSave($insert)){
+            if(!empty($this->joinTime))  $this->joinTime = strtotime($this->joinTime);
+            if(!empty($this->leaveTime)) $this->leaveTime= strtotime($this->leaveTime);
+        }
+        return true;
+    }
+}   

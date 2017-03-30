@@ -6,6 +6,10 @@ class PzBase extends \yii\db\ActiveRecord
 {
 	/** @var 部门与职位公用的一个属性：公司列表数组 */
     public $companyMap = [];
+	/** @var 部门列表数组 */
+    public $deptMap    = [];
+	/** @var 职位列表数组 */
+    public $posMap     = [];
     
 	public function beforeSave($insert)
 	{
