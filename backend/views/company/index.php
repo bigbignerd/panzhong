@@ -10,27 +10,44 @@ use yii\grid\GridView;
 $this->title = 'Pz Companies';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="pz-company-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Create Pz Company', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'name',
-            'remark:ntext',
-            'created_at',
-            'updated_at',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+<div class="pz-company-index box box-primary">
+    <div class="box-header">
+        <h3 class="box-title"><?= Html::encode($this->title) ?></h3>
+    </div>
+    <div class="box-body">
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                'name',
+                'remark:ntext',
+                [
+                    'attribute' => 'created_at',
+                    'value' => function($data){
+                        return date('Y-m-d H:i', $data->created_at);
+                    }
+                ],
+                [
+                    'attribute' => 'updated_at',
+                    'value' => function($data){
+                        return date('Y-m-d H:i', $data->updated_at);
+                    }
+                ],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'header'=>'操作',
+                    'template' => '{view} {update}',
+                    'buttons'  => [
+                        'view' => function($url, $model, $key){
+                            return Html::a("查看", $url, ['title'=>'查看公司详细信息', 'class'=>'btn btn-xs btn-warning']);
+                        },
+                        'update' => function($url, $model, $key){
+                            return Html::a("修改", $url, ['title'=>'修改公司信息', 'class'=>'btn btn-xs btn-primary']);
+                        }
+                    ],
+                ],
+            ],
+        ]); ?>
+    </div>
 </div>

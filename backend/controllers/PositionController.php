@@ -37,7 +37,8 @@ class PositionController extends CommonController
     {
         $searchModel = new PzPositionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $searchModel = $this->initListMap($searchModel);
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -64,6 +65,7 @@ class PositionController extends CommonController
     public function actionCreate()
     {
         $model = new PzPosition();
+        $model = $this->initListMap($model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -116,6 +118,7 @@ class PositionController extends CommonController
     protected function findModel($id)
     {
         if (($model = PzPosition::findOne($id)) !== null) {
+            $model  = $this->initListMap($model);
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

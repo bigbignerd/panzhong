@@ -29,7 +29,7 @@ class PzCompany extends \backend\models\PzBase
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name'], 'required','message'=>'公司名称不能为空'],
             [['remark'], 'string'],
             [['created_at', 'updated_at'], 'integer'],
             [['name'], 'string', 'max' => 300],
@@ -43,10 +43,11 @@ class PzCompany extends \backend\models\PzBase
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'remark' => 'Remark',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'name' => '子公司名',
+            'remark' => '备注',
+            'created_at' => '创建时间',
+            'updated_at' => '更新时间',
         ];
     }
+    
 }

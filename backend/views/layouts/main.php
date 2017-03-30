@@ -39,7 +39,9 @@ MainAsset::register($this);
                 <li class="active"><?=ucfirst(Yii::$app->controller->id)?></li>
             </ol>
         </section>
-        <?=$content;?>
+        <section class="content">
+            <?=$content;?>            
+        </section>
     </div>
 </div>
 <?php $this->endBody() ?>

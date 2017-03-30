@@ -20,13 +20,13 @@ class MainAsset extends AppAsset
         'plugins/datepicker/datepicker3.css',
         'plugins/daterangepicker/daterangepicker-bs3.css',
         'plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css',
+        'css/main.css',
     ];
     public $js = [
     	'plugins/jquery-ui-1.11.4/jquery-ui.min.js',
     	'plugins/bootstrap/js/bootstrap.min.js',
     	'plugins/raphael/raphael.min.js',
     	'plugins/iCheck/icheck.min.js',
-    	// 'plugins/morris/morris.min.js',
     	'plugins/sparkline/jquery.sparkline.min.js',
     	'plugins/jvectormap/jquery-jvectormap-1.2.2.min.js',
     	'plugins/jvectormap/jquery-jvectormap-world-mill-en.js',
@@ -38,7 +38,6 @@ class MainAsset extends AppAsset
     	'plugins/slimScroll/jquery.slimscroll.min.js',
     	'plugins/fastclick/fastclick.js',
     	'js/app.min.js',
-    	// 'js/pages/dashboard.js',
     	'js/demo.js',
     ];
 

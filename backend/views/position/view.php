@@ -12,11 +12,10 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pz-position-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('回列表', ['index'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('删除', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -30,10 +29,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'companyId',
+            [
+                'attribute' => 'companyId',
+                'value' => function($model){
+                    return $model->companyMap[$model->companyId];
+                }
+            ],
             'remark:ntext',
-            'created_at',
-            'updated_at',
+            'created_at:date',
+            'updated_at:date',
         ],
     ]) ?>
 

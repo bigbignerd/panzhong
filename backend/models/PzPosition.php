@@ -44,11 +44,11 @@ class PzPosition extends \backend\models\PzBase
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'companyId' => 'Company ID',
-            'remark' => 'Remark',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'name' => '职位名称',
+            'companyId' => '所属子公司',
+            'remark' => '备注',
+            'created_at' => '创建时间',
+            'updated_at' => '更新时间',
         ];
     }
 }

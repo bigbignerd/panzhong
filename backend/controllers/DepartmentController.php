@@ -35,12 +35,15 @@ class DepartmentController extends CommonController
      */
     public function actionIndex()
     {
-        $searchModel = new PzDepartmentSearch();
+        $searchModel  = new PzDepartmentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $searchModel  = $this->initListMap($searchModel);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'companyMap'   => $companyMap,
         ]);
     }
 
@@ -64,6 +67,7 @@ class DepartmentController extends CommonController
     public function actionCreate()
     {
         $model = new PzDepartment();
+        $model = $this->initListMap($model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -116,6 +120,7 @@ class DepartmentController extends CommonController
     protected function findModel($id)
     {
         if (($model = PzDepartment::findOne($id)) !== null) {
+            $model = $this->initListMap($model);
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
