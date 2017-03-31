@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\PzStaff;
-use backend\models\PzStaffSearch;
+use backend\models\PzOrder;
+use backend\models\PzOrderSearch;
 use backend\controllers\CommonController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * StaffController implements the CRUD actions for PzStaff model.
+ * OrderController implements the CRUD actions for PzOrder model.
  */
-class StaffController extends CommonController
+class OrderController extends CommonController
 {
     /**
      * @inheritdoc
@@ -30,17 +30,14 @@ class StaffController extends CommonController
     }
 
     /**
-     * Lists all PzStaff models.
+     * Lists all PzOrder models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new PzStaffSearch();
-        $model = new \backend\models\PzStaff();
-        $model->getStructure();exit;
+        $searchModel = new PzOrderSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $searchModel = $this->initDropdownData($searchModel);
-        
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -48,7 +45,7 @@ class StaffController extends CommonController
     }
 
     /**
-     * Displays a single PzStaff model.
+     * Displays a single PzOrder model.
      * @param integer $id
      * @return mixed
      */
@@ -60,14 +57,13 @@ class StaffController extends CommonController
     }
 
     /**
-     * Creates a new PzStaff model.
+     * Creates a new PzOrder model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new PzStaff();
-        $model = $this->initDropdownData($model);
+        $model = new PzOrder();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -79,7 +75,7 @@ class StaffController extends CommonController
     }
 
     /**
-     * Updates an existing PzStaff model.
+     * Updates an existing PzOrder model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -98,7 +94,7 @@ class StaffController extends CommonController
     }
 
     /**
-     * Deletes an existing PzStaff model.
+     * Deletes an existing PzOrder model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -111,27 +107,18 @@ class StaffController extends CommonController
     }
 
     /**
-     * Finds the PzStaff model based on its primary key value.
+     * Finds the PzOrder model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return PzStaff the loaded model
+     * @return PzOrder the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = PzStaff::findOne($id)) !== null) {
-            $model = $this->initDropdownData($model);
+        if (($model = PzOrder::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-    protected function initDropdownData($model)
-    {
-        $model = $this->initListMap($model);
-        $model = $this->initDeptListMap($model);
-        $model = $this->initPosListMap($model);
-
-        return $model;
     }
 }

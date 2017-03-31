@@ -38,9 +38,9 @@ class PzStaff extends \backend\models\PzBase
     public function rules()
     {
         return [
-            [['companyId', 'deptId', 'positionId', 'qq', 'joinTime', 'leaveTime', 'status'], 'integer'],
+            [['companyId', 'deptId', 'positionId', 'qq', 'status'], 'integer'],
             [['name', 'joinTime','companyId', 'deptId', 'positionId'], 'required'],
-            [['leaveDesc'], 'string'],
+            [['leaveDesc','joinTime', 'leaveTime'], 'string'],
             [['name', 'address'], 'string', 'max' => 300],
             [['phone', 'telephone'], 'string', 'max' => 20],
             [['email'], 'string', 'max' => 60],
@@ -76,5 +76,31 @@ class PzStaff extends \backend\models\PzBase
             if(!empty($this->leaveTime)) $this->leaveTime= strtotime($this->leaveTime);
         }
         return true;
+    }
+    /**
+     * 按公司划分公司组织人员
+     * @author bignerd
+     * @since  2017-03-31T15:32:33+0800
+     * @return [type]
+     */
+    public function getStructure()
+    {
+        
+        $data  = $this->find()->select('c.name as cname,d.name as dname,p.name as pname,staff.name,staff.id')
+                       ->from($this->tableName().' staff')
+                       ->leftJoin('pz_company c','c.id = staff.companyId')
+                       ->leftJoin('pz_department d','d.id = staff.deptId')
+                       ->leftJoin('pz_position p', 'p.id = staff.positionId')
+                       ->where(['staff.status' => 1])
+                       ->asArray()
+                       ->all();
+        $sortData = [];
+        if(!empty($data)){
+            foreach ($data as $k => $v) {
+                $sortData[$v['cname']][] = $v;
+            }
+        }
+
+        return $sortData;
     }
 }   

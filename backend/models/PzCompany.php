@@ -48,6 +48,5 @@ class PzCompany extends \backend\models\PzBase
             'created_at' => '创建时间',
             'updated_at' => '更新时间',
         ];
-    }
-    
+    }    
 }

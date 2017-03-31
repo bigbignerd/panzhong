@@ -6,3 +6,9 @@ div.required label:after{
 	font-size: 12px;
 	color: #000;
 }
+.red{
+	color:red;
+}
+.green{
+	color: green;
+}

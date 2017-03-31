@@ -40,7 +40,7 @@ use backend\widget\DateTimeControl;
 
                 <?= $form->field($model, 'joinTime')->widget(DateTimeControl::className(), [
 
-                    'fieldName' => 'Pz[joinTime]',
+                    'fieldName' => 'PzStaff[joinTime]',
                     'value' => $model->joinTime ? date("Y-m-d H:i",$model->joinTime) : '',
                     'renderInput' => 1,
                     'format' => 'yyyy-mm-dd hh:ii',
@@ -66,7 +66,7 @@ use backend\widget\DateTimeControl;
 
                         <?= $form->field($model, 'leaveTime')->widget(DateTimeControl::className(), [
 
-                            'fieldName' => 'Pz[leaveTime]',
+                            'fieldName' => 'PzStaff[leaveTime]',
                             'value' => $model->leaveTime ? date("Y-m-d H:i",$model->leaveTime) : '',
                             'renderInput' => 1,
                             'format' => 'yyyy-mm-dd hh:ii',
