@@ -37,7 +37,7 @@ class CompanyController extends CommonController
     {
         $searchModel = new PzCompanySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        // $dataProvider->pagination->defaultPageSize = 2;
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

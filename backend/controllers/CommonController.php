@@ -29,5 +29,13 @@ class CommonController extends \yii\web\Controller
     	$model->posMap = $departModel->listIdNameMap($departModel->listArray());
     	return $model;
     }
+    protected function initDropdownData($model)
+    {
+        $model = $this->initListMap($model);
+        $model = $this->initDeptListMap($model);
+        $model = $this->initPosListMap($model);
+
+        return $model;
+    }
 }
 ?>

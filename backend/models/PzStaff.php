@@ -83,24 +83,27 @@ class PzStaff extends \backend\models\PzBase
      * @since  2017-03-31T15:32:33+0800
      * @return [type]
      */
-    public function getStructure()
+    public function getStructure($name='')
     {
         
-        $data  = $this->find()->select('c.name as cname,d.name as dname,p.name as pname,staff.name,staff.id')
+        $data  = $this->find()->select('staff.id,staff.name,c.name as companyId,d.name as deptId,p.name as positionId')
                        ->from($this->tableName().' staff')
                        ->leftJoin('pz_company c','c.id = staff.companyId')
                        ->leftJoin('pz_department d','d.id = staff.deptId')
                        ->leftJoin('pz_position p', 'p.id = staff.positionId')
-                       ->where(['staff.status' => 1])
-                       ->asArray()
-                       ->all();
-        $sortData = [];
-        if(!empty($data)){
-            foreach ($data as $k => $v) {
-                $sortData[$v['cname']][] = $v;
-            }
+                       ->where(['staff.status' => 1]);
+        if(!empty($name)){
+            $data = $data->andWhere(['like','staff.name',$name])->asArray()->all();
+        }else{
+            $data = $data->asArray()->all();
         }
-
-        return $sortData;
+        // $sortData = [];
+        // if(!empty($data)){
+        //     foreach ($data as $k => $v) {
+        //         if(empty($v["dname"])) $v['dname'] = '通用';
+        //         $sortData[$v['cname']][$v['dname']][] = $v;
+        //     }
+        // }
+        return $data;
     }
 }   
