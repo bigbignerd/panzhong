@@ -44,6 +44,9 @@ use yii\grid\GridView;
         </table>
     </div>
 </div>
+<script type="text/javascript">
+
+</script>
 <?=$this->registerJs('
 	var baseUrl = "'.Yii::$app->urlManager->createAbsoluteUrl(["layer/staff"]).'";
 	$("#searchStaff").bind("click", function(){
@@ -56,7 +59,7 @@ use yii\grid\GridView;
 			reloadContent(newUrl);
 		}
 	});
-	
+
 	function reloadContent(url)
 	{
 		var parentObj = $("#staffLayer").parent();

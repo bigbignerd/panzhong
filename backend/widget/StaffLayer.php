@@ -48,6 +48,10 @@ class StaffLayer extends Widget
 					$(targetId).removeAttr("readonly").val(name).attr("readonly", "readonly");
 					//关闭模态框
 					$("#staffLayer").modal("hide");
+					//赋值
+					$(targetId).val(name);
+					//添加新的input
+                    $("<input type=\'hidden\' name=\'"+$(targetId).attr("name")+"\' value=\'"+ids+"\' />").insertAfter($(targetId).parent());
 				}else{
 					alert("请选择相关负责人");
 					return ;

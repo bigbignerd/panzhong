@@ -64,6 +64,10 @@ class OrderProcessController extends CommonController
     public function actionCreate()
     {
         $model = new PzOrderProcess();
+        $orderId = Yii::$app->request->get("orderId");
+        /** @var  根据orderId获取orderName */
+        $model->orderId = $orderId;
+        $model->orderName = $model->orderName($orderId);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -116,6 +120,7 @@ class OrderProcessController extends CommonController
     protected function findModel($id)
     {
         if (($model = PzOrderProcess::findOne($id)) !== null) {
+            $model->orderName = $model->orderName($model->orderId);
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

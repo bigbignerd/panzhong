@@ -43,7 +43,7 @@ class PzOrder extends \backend\models\PzBase
             [['salesman'], 'string', 'max' => 255],
         ];
     }
-
+    public $statusMap = ['1'=>'开始','2'=>'完成'];
     /**
      * @inheritdoc
      */
@@ -62,5 +62,18 @@ class PzOrder extends \backend\models\PzBase
             'end_at' => '结束时间',
             'remark' => '备注',
         ];
+    }
+    public static function orderSalesman($id)
+    {
+        $model = new \backend\models\PzStaff();
+        $data  = $model->find()->where(['in','id',explode(",", $id)])
+                       ->asArray()
+                       ->all();
+        if(!empty($data)){
+            $columns = \yii\helpers\ArrayHelper::getColumn($data, 'name');
+            return implode(",",$columns);
+        }else{
+            return '';
+        }
     }
 }

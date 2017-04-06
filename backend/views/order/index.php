@@ -10,33 +10,64 @@ use yii\grid\GridView;
 $this->title = 'Pz Orders';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="pz-order-index">
+<div class="pz-order-index box box-primary">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <div class="box-header">
+        <h3 class="box-title"><?= Html::encode($this->title) ?></h3>
+    </div>
+    <div class="box-body">
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
 
-    <p>
-        <?= Html::a('Create Pz Order', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+                'name',
+                [
+                'attribute' => 'salesman',
+                    'value' => function($data){
+                        return \backend\models\PzOrder::orderSalesman($data->salesman);
+                    }
+                ],
+                'deposit',
+                'sum',
+                [
+                    'attribute' => 'status',
+                    'value' => function($data){
+                        return $data->statusMap[$data->status];
+                    }
+                ],
+                [
+                    'attribute' => 'created_at',
+                    'value' => function($data){
+                        return date('Y-m-d', $data->created_at);
+                    }
+                ],
+                // 'created_at',
+                // 'updated_at',
+                // 'start_at',
+                // 'end_at',
+                // 'remark:ntext',
 
-            'id',
-            'name',
-            'salesman',
-            'deposit',
-            'sum',
-            // 'status',
-            // 'created_at',
-            // 'updated_at',
-            // 'start_at',
-            // 'end_at',
-            // 'remark:ntext',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'header'=>'操作',
+                    'headerOptions' => ['width'=>'10%'],
+                    'template' => '{view} {update} {addRecord}',
+                    'buttons'  => [
+                        'view' => function($url, $model, $key){
+                            return Html::a("查看", $url, ['title'=>'查看订单详情', 'class'=>'btn btn-xs btn-warning']);
+                        },
+                        'update' => function($url, $model, $key){
+                            return Html::a("修改", $url, ['title'=>'修改订单详情', 'class'=>'btn btn-xs btn-primary']);
+                        },
+                        'addRecord' => function($url, $model, $key){
+                            $url = Yii::$app->urlManager->createAbsoluteUrl(['order-process/create','orderId'=>$model->id]);
+                            return Html::a("添加记录", $url, ['title'=>'为订单添加记录', 'class'=>'btn btn-xs btn-success'])
+                        }
+                    ],
+                ],
+            ],
+        ]); ?>
+    </div>
 </div>
