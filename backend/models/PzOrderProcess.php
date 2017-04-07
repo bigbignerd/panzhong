@@ -70,4 +70,9 @@ class PzOrderProcess extends \backend\models\PzBase
         $data = \backend\models\PzOrder::findOne($orderId);
         return $data->name;
     }
+    public static function staticOrderName($orderId)
+    {
+        $data = \backend\models\PzOrder::findOne($orderId);
+        return $data->name;
+    }
 }

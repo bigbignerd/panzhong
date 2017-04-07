@@ -43,7 +43,10 @@ class OrderProcessController extends CommonController
             'dataProvider' => $dataProvider,
         ]);
     }
+    public function actionOne()
+    {
 
+    }
     /**
      * Displays a single PzOrderProcess model.
      * @param integer $id
@@ -67,7 +70,7 @@ class OrderProcessController extends CommonController
         $orderId = Yii::$app->request->get("orderId");
         /** @var  根据orderId获取orderName */
         $model->orderId = $orderId;
-        $model->orderName = $model->orderName($orderId);
+        $model = $this->initOrderName($model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -120,10 +123,14 @@ class OrderProcessController extends CommonController
     protected function findModel($id)
     {
         if (($model = PzOrderProcess::findOne($id)) !== null) {
-            $model->orderName = $model->orderName($model->orderId);
-            return $model;
+            return $this->initOrderName($model);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    protected function initOrderName($model)
+    {
+        $model->orderName = $model->orderName($model->orderId);
+        return $model;
     }
 }
