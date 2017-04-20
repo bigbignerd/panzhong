@@ -22,7 +22,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
-                'name',
+                [
+                    'attribute' => 'name',
+                    'format'=> "raw",
+                    'value' => function($data){
+                        return Html::a($data->name,['order-process/index','PzOrderProcessSearch[orderId]'=>$data->id]);
+                    }
+                ],
                 [
                 'attribute' => 'salesman',
                     'value' => function($data){
@@ -63,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'addRecord' => function($url, $model, $key){
                             $url = Yii::$app->urlManager->createAbsoluteUrl(['order-process/create','orderId'=>$model->id]);
-                            return Html::a("添加记录", $url, ['title'=>'为订单添加记录', 'class'=>'btn btn-xs btn-success'])
+                            return Html::a("添加记录", $url, ['title'=>'为订单添加记录', 'class'=>'btn btn-xs btn-success','style'=>'margin-top:2px;']);
                         }
                     ],
                 ],
